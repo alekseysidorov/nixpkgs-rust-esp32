@@ -1,4 +1,6 @@
 final: prev:
 {
-  cargo-espflash = prev.callPackage ./pkgs/carg-espflash { };
+  cargo-espflash = prev.callPackage ./pkgs/cargo-espflash.nix { };
+  ldproxy = prev.callPackage ./pkgs/ldproxy.nix { };
+  espup = prev.callPackage ./pkgs/espup.nix { };
 }

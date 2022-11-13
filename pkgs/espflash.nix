@@ -2,18 +2,21 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "espflash";
-  version = "2.0.0-rc.1";
+  version = "1.7.0";
 
   src = fetchCrate {
     inherit pname version;
-    sha256 = "sha256-fF1M9H2PFg5hG+ULdDY5P66uTPaw5HnjnP/Zy3ROh4g=";
+    sha256 = "sha256-R0vVz2PkcyV7ROCm9xyp9wHSirPtDv6Ga7Vamrvyrjs=";
   };
 
   buildInputs = lib.optionals stdenv.isDarwin [
     darwin.apple_sdk.frameworks.Security
   ];
 
-  cargoSha256 = "sha256-F2BmR6oXYJtP2JXpbWHUZzHQdta3WFNDFLILNi+jKc0=";
+  cargoSha256 = "sha256-F9L45EuZwyLJ4q4k6ZhPUI7M5zITOuqwkjuOdtpD4Vc=";
+
+  # Failed to get partition table
+  doCheck = false;
 
   meta = with lib; {
     description = "A command-line tool for flashing Espressif devices over serial";

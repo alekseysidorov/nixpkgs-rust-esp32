@@ -7,13 +7,18 @@
   };
 
   outputs = { self, nixpkgs, flake-utils }: {
-    overlay = import ./overlay.nix;
+    overlays.default = import ./overlay.nix;
+
   } // flake-utils.lib.eachDefaultSystem
     (system:
-      let pkgs = import nixpkgs { inherit system; overlays = [ self.overlay ]; };
+      let
+        pkgs = import nixpkgs { inherit system; overlays = [ self.overlays.default ]; };
+
+        rustShell = pkgs.callPackage ./shell.nix { };
+
       in
       {
-        devShells.default = import ./shell.nix { inherit pkgs; };
+        devShells.default = rustShell;
       }
     );
 }

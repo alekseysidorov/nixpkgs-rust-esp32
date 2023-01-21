@@ -1,19 +1,42 @@
-{ lib, fetchCrate, rustPlatform, darwin, stdenv }:
+{ lib
+, rustPlatform
+, fetchCrate
+, pkg-config
+, udev
+, stdenv
+, darwin
+, openssl
+, perl
+, curl
+, libgit2
+}:
 
 rustPlatform.buildRustPackage rec {
   pname = "cargo-espflash";
-  version = "2.0.0-rc.1";
+  version = "2.0.0-rc.3";
 
   src = fetchCrate {
     inherit pname version;
-    sha256 = "sha256-j9EAMgLYSctQ0PFA7MZ6qn3elyBXW0aql6Q2Owaksw0=";
+    sha256 = "sha256-c2wgdPh70xPnW0KCIPQ6snQNdLPeF6J7VQNoxSYojE8=";
   };
 
-  buildInputs = lib.optionals stdenv.isDarwin [
-    darwin.apple_sdk.frameworks.Security
+  nativeBuildInputs = [
+    pkg-config
+    perl
   ];
 
-  cargoSha256 = "sha256-TpsBvN3KYSmqMaQsBEKUnSoOTbRdlm5JAIiVuwXzq3Q=";
+  buildInputs = [
+    openssl
+    curl
+    libgit2
+  ] ++ lib.optionals stdenv.isLinux [
+    udev
+  ] ++ lib.optionals stdenv.isDarwin [
+    darwin.apple_sdk.frameworks.Security
+    darwin.apple_sdk.frameworks.SystemConfiguration
+  ];
+
+  cargoSha256 = "sha256-AHgXZMYm9syD3k+PwXeawSLrGELTgWjrZWVXBRXBwKw=";
 
   meta = with lib; {
     description = "Cargo subcommand for flashing Espressif devices over serial";

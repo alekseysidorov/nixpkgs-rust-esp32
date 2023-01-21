@@ -1,4 +1,4 @@
-# Temporary shell file to check packages
+# Shell example
 
 { pkgs ? import ./default.nix }:
 

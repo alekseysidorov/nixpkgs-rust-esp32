@@ -1,6 +1,5 @@
 # Shell example
-
-{ pkgs ? import ./default.nix }:
+{ pkgs ? import <nixpkgs> { overlays = [ (import ./.) ]; } }:
 
 pkgs.mkShell {
   buildInputs = with pkgs; [

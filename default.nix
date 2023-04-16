@@ -1,2 +1,7 @@
-# Returns nixpkgs with the overlay from this repo applied.
-import <nixpkgs> { overlays = [ (import ./overlay.nix) ]; }
+final: prev:
+{
+  cargo-espflash = prev.callPackage ./pkgs/cargo-espflash.nix { };
+  espflash = prev.callPackage ./pkgs/espflash.nix { };
+  ldproxy = prev.callPackage ./pkgs/ldproxy.nix { };
+  espup = prev.callPackage ./pkgs/espup.nix { };
+}
